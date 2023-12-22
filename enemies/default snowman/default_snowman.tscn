@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://u4xrbxhxkrly"]
+
+[ext_resource type="Script" path="res://enemies/default snowman/default_snowman.gd" id="1_6cqjf"]
+[ext_resource type="Texture2D" uid="uid://bjq0j3qhho4ct" path="res://enemies/default snowman/assets/walk/1.png" id="1_rwph1"]
+[ext_resource type="Texture2D" uid="uid://t3u20m2511gf" path="res://enemies/default snowman/assets/walk/2.png" id="2_ei7kr"]
+[ext_resource type="Texture2D" uid="uid://comq65k63ru1b" path="res://enemies/default snowman/assets/walk/3.png" id="3_16mes"]
+[ext_resource type="Texture2D" uid="uid://bxp2i84mieehw" path="res://enemies/default snowman/assets/walk/4.png" id="4_x8xy0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2oncs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_rwph1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ei7kr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_16mes")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_x8xy0")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e475c"]
+size = Vector2(32, 63)
+
+[sub_resource type="Curve2D" id="Curve2D_7nnkl"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 8, 40, 0, 0, 0, 0, 128, 40, 0, 0, 0, 0, 8, 40, 0, 0, 0, 0, 8, 40)
+}
+point_count = 4
+
+[node name="DefaultSnowman" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_6cqjf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_2oncs")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(11, 3.5)
+shape = SubResource("RectangleShape2D_e475c")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_7nnkl")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(8, 40)

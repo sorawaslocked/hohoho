@@ -1,7 +1,50 @@
-[gd_scene format=3 uid="uid://bty0fkcml1mes"]
+[gd_scene load_steps=8 format=3 uid="uid://bty0fkcml1mes"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_6lhci"]
+[ext_resource type="Texture2D" uid="uid://0xj6nih18n73" path="res://player/assets/walk/1.png" id="1_xbgbw"]
+[ext_resource type="Texture2D" uid="uid://bb7e8q85ev55p" path="res://player/assets/walk/2.png" id="2_sfc5s"]
+[ext_resource type="Texture2D" uid="uid://ccr25xbmvcrsp" path="res://player/assets/walk/3.png" id="3_oktnp"]
+[ext_resource type="Texture2D" uid="uid://cem3lttt4okck" path="res://player/assets/walk/4.png" id="4_847t6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aca07"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_xbgbw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_sfc5s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_oktnp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_847t6")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h7mdi"]
+size = Vector2(22, 89)
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 2
+script = ExtResource("1_6lhci")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_aca07")
+animation = &"walk"
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 2.5)
+shape = SubResource("RectangleShape2D_h7mdi")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="CoyoteJumpTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
