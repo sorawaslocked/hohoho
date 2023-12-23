@@ -1,54 +1,47 @@
 extends CharacterBody2D
 
-const SPEED = 200
+const FRICTION = 1000
 
 @onready var path_follow_2d = get_parent()
 @onready var animated_sprite_2d = $AnimatedSprite2D
-@onready var player = $"../../../../Player"
+@onready var floor_detection = $FloorDetection
+@onready var player_detection = $PlayerDetection
 @onready var default_snowman = $"."
+@onready var player = $"../Player"
 
-var move_right = true
-var is_aggroed = false
-var direction = 0
+var direction = 1
+var speed = 150
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
 	pass
 
 func _process(delta):
-	if not is_aggroed:
-		patrol(delta)
-	else:
-		if player.global_position.x < default_snowman.global_position.x - 1:
-			direction = -1
-		elif player.global_position.x > default_snowman.global_position.x + 1:
-			direction = 1
-		else:
-			direction = 0
+	apply_gravity(delta)
+	if player_detection.is_colliding():
 		follow_player(delta)
-
-
-func patrol(delta):
-	if move_right:
-		if path_follow_2d.progress_ratio == 1.0:
-			scale.x *= -1
-			move_right = false
-		else:
-			path_follow_2d.progress += SPEED * delta
 	else:
-		if path_follow_2d.progress_ratio == 0.0:
-			scale.x *= -1
-			move_right = true
-		else:
-			path_follow_2d.progress -= SPEED * delta
+		speed = 150
+		handle_movement()
+	move_and_slide()
 
 func follow_player(delta):
-	if direction:
-		velocity.x = SPEED * direction
+	speed = 250
+	if global_position.distance_to(player.global_position) < 75:
+		velocity.x = 0
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED * delta)
+		handle_movement()
 
-func _on_area_2d_body_entered(body):
-	is_aggroed = true
+func apply_gravity(delta):
+	if not is_on_floor():
+		velocity.y += gravity * delta
 
-func _on_area_2d_body_exited(body):
-	is_aggroed = false
+func flip():
+	direction *= -1
+	scale.x *= -1
+
+func handle_movement():
+	if not floor_detection.is_colliding():
+		flip()
+	
+	velocity.x = speed * direction
