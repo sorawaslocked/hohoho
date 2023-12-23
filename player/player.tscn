@@ -1,50 +1,92 @@
-[gd_scene load_steps=9 format=3 uid="uid://bty0fkcml1mes"]
+[gd_scene load_steps=17 format=3 uid="uid://bty0fkcml1mes"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_6lhci"]
-[ext_resource type="Texture2D" uid="uid://0xj6nih18n73" path="res://player/assets/walk/1.png" id="1_xbgbw"]
-[ext_resource type="Texture2D" uid="uid://bb7e8q85ev55p" path="res://player/assets/walk/2.png" id="2_sfc5s"]
-[ext_resource type="Texture2D" uid="uid://ccr25xbmvcrsp" path="res://player/assets/walk/3.png" id="3_oktnp"]
-[ext_resource type="Texture2D" uid="uid://cem3lttt4okck" path="res://player/assets/walk/4.png" id="4_847t6"]
+[ext_resource type="Texture2D" uid="uid://c6dd1n3a2ijgy" path="res://player/assets/idle/with bag/1.png" id="2_2vght"]
+[ext_resource type="Texture2D" uid="uid://bs7kkj2j5gff0" path="res://player/assets/attack/with bag/1.png" id="2_dbyrm"]
+[ext_resource type="Texture2D" uid="uid://cm6i8ju5bodjl" path="res://player/assets/idle/with bag/2.png" id="3_cn3d5"]
+[ext_resource type="Texture2D" uid="uid://dgy4r1li5i5vk" path="res://player/assets/attack/with bag/2.png" id="3_d21ny"]
+[ext_resource type="Texture2D" uid="uid://ct564niwkuo64" path="res://player/assets/attack/with bag/3.png" id="4_g6ejr"]
+[ext_resource type="Texture2D" uid="uid://cqt0xmdbdbyyb" path="res://player/assets/run/with bag/1.png" id="4_imjrx"]
+[ext_resource type="Texture2D" uid="uid://br2gdl4m2jich" path="res://player/assets/attack/with bag/4.png" id="5_ehr43"]
+[ext_resource type="Texture2D" uid="uid://cu5virbtp8ykv" path="res://player/assets/run/with bag/2.png" id="5_y58g4"]
+[ext_resource type="Texture2D" uid="uid://cxc2al0lblvme" path="res://player/assets/attack/with bag/5.png" id="6_li3a1"]
+[ext_resource type="Texture2D" uid="uid://dty7rdw1uguek" path="res://player/assets/run/with bag/3.png" id="6_xbpjj"]
+[ext_resource type="Texture2D" uid="uid://v2jcfyas8468" path="res://player/assets/attack/with bag/6.png" id="7_1fm8h"]
+[ext_resource type="Texture2D" uid="uid://cfuag615mfa0w" path="res://player/assets/run/with bag/4.png" id="7_bi3fj"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_aca07"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_xbgbw")
+"texture": ExtResource("3_d21ny")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_sfc5s")
+"texture": ExtResource("2_dbyrm")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_oktnp")
+"texture": ExtResource("4_g6ejr")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_847t6")
+"texture": ExtResource("5_ehr43")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_li3a1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_1fm8h")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_2vght")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_cn3d5")
 }],
 "loop": true,
-"name": &"walk",
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_imjrx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_y58g4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_xbpjj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_bi3fj")
+}],
+"loop": true,
+"name": &"run",
 "speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h7mdi"]
-size = Vector2(22, 89)
+size = Vector2(18, 71)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eopq8"]
-radius = 32.0
-height = 80.0
+radius = 28.0
+height = 68.0
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 34
 script = ExtResource("1_6lhci")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_aca07")
-animation = &"walk"
+animation = &"attack"
+autoplay = "idle"
 flip_h = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, 2.5)
+[node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_h7mdi")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -54,7 +96,7 @@ collision_layer = 8
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
-position = Vector2(16, 0)
+position = Vector2(13, 0)
 shape = SubResource("CapsuleShape2D_eopq8")
 
 [node name="AttackCooldown" type="Timer" parent="."]

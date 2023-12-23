@@ -9,6 +9,8 @@ const FRICTION = 2000
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var default_snowman = $"../DefaultSnowman"
 @onready var attack_cooldown = $AttackCooldown
+@onready var player_collision_shape = $PlayerCollisionShape
+@onready var hit_area = $HitArea
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -31,6 +33,7 @@ func _physics_process(delta):
 	move_and_slide()
 	var just_left_floor = was_on_floor and not is_on_floor() and velocity.y >= 0
 	if attack_cooldown.time_left == 0.0 and Input.is_action_just_pressed("attack"):
+		animated_sprite.play("attack")
 		attack()
 	if just_left_floor:
 		coyote_jump_timer.start()
@@ -49,12 +52,16 @@ func handle_movement(direction, delta):
 		velocity.x = SPEED * direction
 	else:
 		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
-	if Input.is_action_just_pressed("right") and last_input_direction != "right":
-		scale.x = -1	
-		last_input_direction = "right"
-	elif Input.is_action_just_pressed("left") and last_input_direction != "left":
-		scale.x = -1
-		last_input_direction = "left"
+	if Input.is_action_just_pressed("right"):
+		face_right = true
+		if last_input_direction != "right":
+			scale.x = -1	
+			last_input_direction = "right"
+	elif Input.is_action_just_pressed("left"):
+		face_right = false
+		if last_input_direction != "left":
+			scale.x = -1
+			last_input_direction = "left"
 
 func handle_jump():
 	if is_on_floor() or coyote_jump_timer.time_left > 0.0:
@@ -68,8 +75,18 @@ func apply_gravity(delta):
 		velocity.y += gravity * delta
 
 func apply_animations(direction):
-	if direction:
-		animated_sprite.play("walk")
+	if animated_sprite.animation != "attack":
+		player_collision_shape.position.x = 0
+		if direction:
+			animated_sprite.play("run")
+		else:
+			animated_sprite.play("idle")
+	else:
+		player_collision_shape.position.x = -15
+		hit_area.position.x = -15
+	if animated_sprite.frame == 5:
+		animated_sprite.play("idle")
+	
 
 func _on_hit_area_body_entered(body):
 	can_do_damage = true
