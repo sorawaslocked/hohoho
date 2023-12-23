@@ -9,6 +9,7 @@ const FRICTION = 1000
 @onready var default_snowman = $"."
 @onready var player = $"../Player"
 @onready var attack_cooldown = $AttackCooldown
+@onready var wall_detection = $WallDetection
 
 var direction = 1
 var speed = 150
@@ -21,11 +22,14 @@ func _ready():
 
 func _process(delta):
 	apply_gravity(delta)
-	if player_detection.is_colliding():
-		follow_player(delta)
+	if not player_detection.get_collider() is StaticBody2D \
+	and player_detection.get_collider() != null:
+		follow_player()
 	else:
 		speed = 150
 		handle_movement()
+	if wall_detection.is_colliding():
+		flip()
 	move_and_slide()
 	if HP <= 0:
 		queue_free()
@@ -35,7 +39,7 @@ func attack():
 	if can_do_damage:
 		player.HP -= 40
 
-func follow_player(delta):
+func follow_player():
 	speed = 250
 	if player != null and global_position.distance_to(player.global_position) < 75:
 		velocity.x = 0
@@ -60,7 +64,6 @@ func handle_movement():
 
 func _on_hit_area_body_entered(body):
 	can_do_damage = true
-
 
 func _on_hit_area_body_exited(body):
 	can_do_damage = false

@@ -15,6 +15,11 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var HP = 200
 var can_do_damage = false
 var enemies = []
+var face_right = true
+var last_input_direction = "right"
+
+func _ready():
+	pass
 
 func _physics_process(delta):
 	var direction = Input.get_axis("left", "right")
@@ -44,6 +49,12 @@ func handle_movement(direction, delta):
 		velocity.x = SPEED * direction
 	else:
 		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
+	if Input.is_action_just_pressed("right") and last_input_direction != "right":
+		scale.x = -1	
+		last_input_direction = "right"
+	elif Input.is_action_just_pressed("left") and last_input_direction != "left":
+		scale.x = -1
+		last_input_direction = "left"
 
 func handle_jump():
 	if is_on_floor() or coyote_jump_timer.time_left > 0.0:
@@ -59,11 +70,6 @@ func apply_gravity(delta):
 func apply_animations(direction):
 	if direction:
 		animated_sprite.play("walk")
-		if direction > 0:
-			animated_sprite.flip_h = true
-		else:
-			animated_sprite.flip_h = false
-
 
 func _on_hit_area_body_entered(body):
 	can_do_damage = true

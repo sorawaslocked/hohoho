@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://crf4juxeqwuyg"]
+[gd_scene load_steps=5 format=3 uid="uid://crf4juxeqwuyg"]
 
-[ext_resource type="PackedScene" uid="uid://deaqtctgxoaij" path="res://levels/first level/house1/house_1.tscn" id="1_06bqx"]
 [ext_resource type="PackedScene" uid="uid://u4xrbxhxkrly" path="res://enemies/default snowman/default_snowman.tscn" id="2_e0obo"]
 [ext_resource type="PackedScene" uid="uid://bty0fkcml1mes" path="res://player/player.tscn" id="2_m0w81"]
 
@@ -12,8 +11,17 @@ size = Vector2(32, 112)
 
 [node name="FirstLevel" type="Node2D"]
 
+[node name="Player" parent="." instance=ExtResource("2_m0w81")]
+position = Vector2(128, 80)
+
+[node name="DefaultSnowman" parent="." instance=ExtResource("2_e0obo")]
+position = Vector2(464, 0)
+
+[node name="DefaultSnowman2" parent="." instance=ExtResource("2_e0obo")]
+position = Vector2(384, 0)
+
 [node name="Floor1" type="StaticBody2D" parent="."]
-position = Vector2(344, -176)
+position = Vector2(800, 48)
 collision_layer = 2
 collision_mask = 5
 metadata/_edit_group_ = true
@@ -24,7 +32,7 @@ shape = SubResource("RectangleShape2D_8rlrb")
 debug_color = Color(0, 0.580392, 0.8, 0.419608)
 
 [node name="Floor2" type="StaticBody2D" parent="."]
-position = Vector2(-184, 128)
+position = Vector2(128, 144)
 collision_layer = 2
 metadata/_edit_group_ = true
 
@@ -32,17 +40,8 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_8rlrb")
 debug_color = Color(0, 0.580392, 0.8, 0.419608)
 
-[node name="House1" parent="." instance=ExtResource("1_06bqx")]
-position = Vector2(112, 144)
-
-[node name="House2" parent="." instance=ExtResource("1_06bqx")]
-position = Vector2(600, 40)
-
-[node name="House3" parent="." instance=ExtResource("1_06bqx")]
-position = Vector2(1032, 168)
-
 [node name="Wall1" type="StaticBody2D" parent="."]
-position = Vector2(1032, 104)
+position = Vector2(760, -24)
 collision_layer = 32
 collision_mask = 5
 metadata/_edit_group_ = true
@@ -50,12 +49,3 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall1"]
 shape = SubResource("RectangleShape2D_4vx1b")
 debug_color = Color(0, 0.580392, 0.8, 0.419608)
-
-[node name="DefaultSnowman" parent="." instance=ExtResource("2_e0obo")]
-position = Vector2(896, 120)
-
-[node name="DefaultSnowman2" parent="." instance=ExtResource("2_e0obo")]
-position = Vector2(544, -8)
-
-[node name="Player" parent="." instance=ExtResource("2_m0w81")]
-position = Vector2(128, 80)
