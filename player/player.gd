@@ -33,6 +33,7 @@ func _physics_process(delta):
 	move_and_slide()
 	var just_left_floor = was_on_floor and not is_on_floor() and velocity.y >= 0
 	if attack_cooldown.time_left == 0.0 and Input.is_action_just_pressed("attack"):
+		attack_cooldown.start()
 		animated_sprite.play("attack")
 		attack()
 	if just_left_floor:
@@ -41,9 +42,12 @@ func _physics_process(delta):
 		queue_free()
 		
 func attack():
-	attack_cooldown.start()
+	await get_tree().create_timer(0.2).timeout
 	if can_do_damage:
 		for enemy in enemies:
+			enemy.modulate = Color(1, 0.659, 0.627)
+			await get_tree().create_timer(0.2).timeout
+			enemy.modulate = Color.WHITE
 			enemy.HP -= 40
 			print(enemy.HP)
 
@@ -76,17 +80,19 @@ func apply_gravity(delta):
 
 func apply_animations(direction):
 	if animated_sprite.animation != "attack":
-		player_collision_shape.position.x = 0
+		player_collision_shape.position.x = 5
 		if direction:
 			animated_sprite.play("run")
 		else:
 			animated_sprite.play("idle")
 	else:
 		player_collision_shape.position.x = -15
-		hit_area.position.x = -15
 	if animated_sprite.frame == 5:
 		animated_sprite.play("idle")
-	
+	if not is_on_floor() and velocity.y > 0:
+		animated_sprite.play("fall")
+	elif not is_on_floor():
+		animated_sprite.play("jump")
 
 func _on_hit_area_body_entered(body):
 	can_do_damage = true

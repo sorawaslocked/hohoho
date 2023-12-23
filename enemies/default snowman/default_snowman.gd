@@ -10,6 +10,7 @@ const FRICTION = 1000
 @onready var player = $"../Player"
 @onready var attack_cooldown = $AttackCooldown
 @onready var wall_detection = $WallDetection
+@onready var enemy_collision_shape = $EnemyCollisionShape
 
 var direction = 1
 var speed = 150
@@ -22,6 +23,7 @@ func _ready():
 
 func _process(delta):
 	apply_gravity(delta)
+	apply_animations(direction)
 	if not player_detection.get_collider() is StaticBody2D \
 	and player_detection.get_collider() != null:
 		follow_player()
@@ -31,19 +33,34 @@ func _process(delta):
 	if wall_detection.is_colliding():
 		flip()
 	move_and_slide()
-	if HP <= 0:
-		queue_free()
 	
+	if HP <= 0:
+		die()
+
+func die():
+	direction = 0
+	animated_sprite_2d.play("death")
+	await get_tree().create_timer(1.1).timeout
+	queue_free()
+
 func attack():
-	attack_cooldown.start()
+	var old_direction = direction
+	direction = 0
+	await get_tree().create_timer(0.75).timeout
+	direction = old_direction
 	if can_do_damage:
+		player.modulate = Color(1, 0.659, 0.627)
+		await get_tree().create_timer(0.2).timeout
+		player.modulate = Color.WHITE
 		player.HP -= 40
 
 func follow_player():
 	speed = 250
-	if player != null and global_position.distance_to(player.global_position) < 75:
+	if player != null and global_position.distance_to(player.global_position) < 40:
 		velocity.x = 0
 		if attack_cooldown.time_left == 0.0:
+			attack_cooldown.start()
+			animated_sprite_2d.play("attack")
 			attack()
 	else:
 		handle_movement()
@@ -59,8 +76,17 @@ func flip():
 func handle_movement():
 	if not floor_detection.is_colliding():
 		flip()
-	
 	velocity.x = speed * direction
+
+func apply_animations(direction):
+	if animated_sprite_2d.animation != "attack":
+		enemy_collision_shape.position = Vector2(12, 0)
+		if direction:
+			animated_sprite_2d.play("walk")
+	else:
+		enemy_collision_shape.position = Vector2(-3, 9)
+	if animated_sprite_2d.frame == 5 and animated_sprite_2d.animation == "attack":
+		animated_sprite_2d.play("walk")
 
 func _on_hit_area_body_entered(body):
 	can_do_damage = true

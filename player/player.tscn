@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bty0fkcml1mes"]
+[gd_scene load_steps=19 format=3 uid="uid://bty0fkcml1mes"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_6lhci"]
 [ext_resource type="Texture2D" uid="uid://c6dd1n3a2ijgy" path="res://player/assets/idle/with bag/1.png" id="2_2vght"]
@@ -13,13 +13,12 @@
 [ext_resource type="Texture2D" uid="uid://dty7rdw1uguek" path="res://player/assets/run/with bag/3.png" id="6_xbpjj"]
 [ext_resource type="Texture2D" uid="uid://v2jcfyas8468" path="res://player/assets/attack/with bag/6.png" id="7_1fm8h"]
 [ext_resource type="Texture2D" uid="uid://cfuag615mfa0w" path="res://player/assets/run/with bag/4.png" id="7_bi3fj"]
+[ext_resource type="Texture2D" uid="uid://bsn8kc5qq7sva" path="res://player/assets/air/fall.png" id="8_whg3w"]
+[ext_resource type="Texture2D" uid="uid://di3ohkbbbjo36" path="res://player/assets/air/jump.png" id="10_x6sby"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_aca07"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_d21ny")
-}, {
 "duration": 1.0,
 "texture": ExtResource("2_dbyrm")
 }, {
@@ -28,6 +27,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("5_ehr43")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_d21ny")
 }, {
 "duration": 1.0,
 "texture": ExtResource("6_li3a1")
@@ -41,6 +43,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("8_whg3w")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("2_2vght")
 }, {
 "duration": 1.0,
@@ -48,6 +58,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_x6sby")
+}],
+"loop": true,
+"name": &"jump",
 "speed": 5.0
 }, {
 "frames": [{
@@ -69,11 +87,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h7mdi"]
-size = Vector2(18, 71)
+size = Vector2(18, 65.625)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eopq8"]
-radius = 28.0
-height = 68.0
+radius = 15.0
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 34
@@ -82,25 +99,27 @@ script = ExtResource("1_6lhci")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_aca07")
-animation = &"attack"
+animation = &"fall"
 autoplay = "idle"
 flip_h = true
 
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(5, 4)
 shape = SubResource("RectangleShape2D_h7mdi")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="HitArea" type="Area2D" parent="."]
+position = Vector2(28, 7)
 collision_layer = 8
 collision_mask = 4
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
-position = Vector2(13, 0)
 shape = SubResource("CapsuleShape2D_eopq8")
 
 [node name="AttackCooldown" type="Timer" parent="."]
-wait_time = 0.75
+wait_time = 2.0
 one_shot = true
 
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
