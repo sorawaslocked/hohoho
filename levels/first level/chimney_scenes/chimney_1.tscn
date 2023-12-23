@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dppg37tyrlm5k"]
+
+[ext_resource type="Texture2D" uid="uid://ca0txr761nyhn" path="res://levels/first level/assets/chimneys/chimney1.png" id="1_vkm54"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cmm3r"]
+size = Vector2(64, 80)
+
+[node name="Chimney1" type="Area2D"]
+collision_layer = 64
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("1_vkm54")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cmm3r")

@@ -54,6 +54,7 @@ attack={
 2d_physics/layer_4="PlayerHitArea"
 2d_physics/layer_5="EnemyHitArea"
 2d_physics/layer_6="Wall"
+2d_physics/layer_7="Chimney"
 
 [rendering]
 

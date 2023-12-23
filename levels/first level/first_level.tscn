@@ -1,61 +1,117 @@
-[gd_scene load_steps=6 format=3 uid="uid://crf4juxeqwuyg"]
+[gd_scene load_steps=12 format=3 uid="uid://crf4juxeqwuyg"]
 
-[ext_resource type="PackedScene" uid="uid://deaqtctgxoaij" path="res://levels/first level/house1/house_1.tscn" id="1_06bqx"]
+[ext_resource type="PackedScene" uid="uid://b35pbt6iecukg" path="res://levels/first level/roof_scenes/roof_1.tscn" id="1_06bqx"]
+[ext_resource type="Texture2D" uid="uid://duuu20lwalcsb" path="res://levels/first level/assets/background.png" id="1_82tmb"]
 [ext_resource type="PackedScene" uid="uid://u4xrbxhxkrly" path="res://enemies/default snowman/default_snowman.tscn" id="2_e0obo"]
 [ext_resource type="PackedScene" uid="uid://bty0fkcml1mes" path="res://player/player.tscn" id="2_m0w81"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8rlrb"]
-size = Vector2(224.25, 32.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4vx1b"]
-size = Vector2(32, 112)
+[ext_resource type="PackedScene" uid="uid://d13xc5tdeajtc" path="res://levels/first level/window_scenes/window_1.tscn" id="3_s2y6j"]
+[ext_resource type="PackedScene" uid="uid://bbw0phkrhxgas" path="res://levels/first level/wall_scenes/wall_1.tscn" id="4_jsqps"]
+[ext_resource type="PackedScene" uid="uid://ccurgrufd6wxy" path="res://levels/first level/roof_scenes/roof_2.tscn" id="5_4atf8"]
+[ext_resource type="Texture2D" uid="uid://bqo1cqxrxsa22" path="res://levels/first level/assets/luminaire.png" id="5_6htpc"]
+[ext_resource type="PackedScene" uid="uid://28gylk57fgwu" path="res://levels/first level/window_scenes/window_2.tscn" id="6_5wtag"]
+[ext_resource type="PackedScene" uid="uid://ccr5dhd1cdw30" path="res://levels/first level/wall_scenes/wall_2.tscn" id="7_bsvwt"]
+[ext_resource type="PackedScene" uid="uid://bb145wihpfnxm" path="res://levels/first level/chimney_scenes/chimney_2.tscn" id="8_0qcyc"]
 
 [node name="FirstLevel" type="Node2D"]
 
-[node name="Floor1" type="StaticBody2D" parent="."]
-position = Vector2(344, -176)
+[node name="Background2" type="Sprite2D" parent="."]
+position = Vector2(7266, 540)
+scale = Vector2(-1, 1.08)
+texture = ExtResource("1_82tmb")
+
+[node name="Background1" type="Sprite2D" parent="."]
+position = Vector2(2422, 540)
+scale = Vector2(1, 1.08)
+texture = ExtResource("1_82tmb")
+
+[node name="Background4" type="Sprite2D" parent="."]
+position = Vector2(2422, 1620)
+scale = Vector2(1, -1.08)
+texture = ExtResource("1_82tmb")
+
+[node name="Background3" type="Sprite2D" parent="."]
+position = Vector2(-2422, 540)
+scale = Vector2(-1, 1.08)
+texture = ExtResource("1_82tmb")
+
+[node name="House1" type="Node2D" parent="."]
+position = Vector2(488, 824)
+metadata/_edit_group_ = true
+
+[node name="Roof1" parent="House1" instance=ExtResource("1_06bqx")]
+
+[node name="Window1" parent="House1" instance=ExtResource("3_s2y6j")]
+position = Vector2(0, 40)
+
+[node name="Window2" parent="House1" instance=ExtResource("3_s2y6j")]
+position = Vector2(0, 126)
+
+[node name="Wall1" parent="House1" instance=ExtResource("4_jsqps")]
+position = Vector2(0, 212)
+
+[node name="House2" type="Node2D" parent="."]
+position = Vector2(1160, 680)
+
+[node name="Roof2" parent="House2" instance=ExtResource("5_4atf8")]
+
+[node name="Window2" parent="House2" instance=ExtResource("6_5wtag")]
+position = Vector2(0, 48)
+
+[node name="Wall2" parent="House2" instance=ExtResource("7_bsvwt")]
+position = Vector2(0, 134)
+
+[node name="Wall3" parent="House2" instance=ExtResource("7_bsvwt")]
+position = Vector2(0, 306)
+
+[node name="Wall4" parent="House2" instance=ExtResource("7_bsvwt")]
+position = Vector2(0, 392)
+
+[node name="Window3" parent="House2" instance=ExtResource("6_5wtag")]
+position = Vector2(0, 220)
+
+[node name="Chimney2" parent="House2" instance=ExtResource("8_0qcyc")]
+position = Vector2(96, -48)
+
+[node name="SingleLantern1" type="StaticBody2D" parent="."]
+position = Vector2(820, 772)
+scale = Vector2(4, 4)
 collision_layer = 2
-collision_mask = 5
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1"]
-scale = Vector2(4, 1)
-shape = SubResource("RectangleShape2D_8rlrb")
-debug_color = Color(0, 0.580392, 0.8, 0.419608)
+[node name="Head" type="Sprite2D" parent="SingleLantern1"]
+texture = ExtResource("5_6htpc")
+region_enabled = true
+region_rect = Rect2(0, 0, 48.0784, 12.9496)
 
-[node name="Floor2" type="StaticBody2D" parent="."]
-position = Vector2(-184, 128)
-collision_layer = 2
-metadata/_edit_group_ = true
+[node name="Body1" type="Sprite2D" parent="SingleLantern1"]
+position = Vector2(0, 16)
+texture = ExtResource("5_6htpc")
+region_enabled = true
+region_rect = Rect2(0, 12.9496, 48.0784, 20.7798)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2"]
-shape = SubResource("RectangleShape2D_8rlrb")
-debug_color = Color(0, 0.580392, 0.8, 0.419608)
+[node name="Body2" type="Sprite2D" parent="SingleLantern1"]
+position = Vector2(0, 35)
+texture = ExtResource("5_6htpc")
+region_enabled = true
+region_rect = Rect2(0, 12.9496, 48.0784, 20.7798)
 
-[node name="House1" parent="." instance=ExtResource("1_06bqx")]
-position = Vector2(112, 144)
+[node name="Body3" type="Sprite2D" parent="SingleLantern1"]
+position = Vector2(0, 54)
+texture = ExtResource("5_6htpc")
+region_enabled = true
+region_rect = Rect2(0, 12.9496, 48.0784, 20.7798)
 
-[node name="House2" parent="." instance=ExtResource("1_06bqx")]
-position = Vector2(600, 40)
+[node name="Tail" type="Sprite2D" parent="SingleLantern1"]
+position = Vector2(0, 70)
+texture = ExtResource("5_6htpc")
+region_enabled = true
+region_rect = Rect2(0, 33.7294, 48.0784, 14.3238)
 
-[node name="House3" parent="." instance=ExtResource("1_06bqx")]
-position = Vector2(1032, 168)
-
-[node name="Wall1" type="StaticBody2D" parent="."]
-position = Vector2(1032, 104)
-collision_layer = 32
-collision_mask = 5
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall1"]
-shape = SubResource("RectangleShape2D_4vx1b")
-debug_color = Color(0, 0.580392, 0.8, 0.419608)
-
-[node name="DefaultSnowman" parent="." instance=ExtResource("2_e0obo")]
-position = Vector2(896, 120)
-
-[node name="DefaultSnowman2" parent="." instance=ExtResource("2_e0obo")]
-position = Vector2(544, -8)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SingleLantern1"]
+polygon = PackedVector2Array(-5, 1.5, -4.25, 0.75, -1.25, 0.75, -0.25, -0.25, 7.25, -0.25, 8, 0.75, 9, 0.75, 10, 1.75, 11.5, 1.75, 12.5, 2.75, 14.75, 2.75, 14.75, 4.25, -5.75, 4.25)
 
 [node name="Player" parent="." instance=ExtResource("2_m0w81")]
-position = Vector2(32, 80)
+position = Vector2(528, 776)
+
+[node name="DefaultSnowman" parent="." instance=ExtResource("2_e0obo")]
+position = Vector2(1320, 640)

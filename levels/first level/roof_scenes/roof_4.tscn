@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://sv0gshersjc2"]
+
+[ext_resource type="PackedScene" uid="uid://djfrl1awouns2" path="res://levels/first level/roof_scenes/roof_3.tscn" id="1_t1qvp"]
+[ext_resource type="Texture2D" uid="uid://bpfcoini661ap" path="res://levels/first level/assets/roofs/roof4.png" id="2_bx5i7"]
+
+[node name="Roof4" instance=ExtResource("1_t1qvp")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_bx5i7")

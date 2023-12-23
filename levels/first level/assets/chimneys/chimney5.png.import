@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2hq2vsqvqnnk"
-path="res://.godot/imported/house2.png-cf139fbc3ab4d4bbd7468c867901d49d.ctex"
+uid="uid://jnth3vah10"
+path="res://.godot/imported/chimney5.png-fc8e5c6556362f39fcc8a63b1a670d02.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://levels/first level/assets/house2.png"
-dest_files=["res://.godot/imported/house2.png-cf139fbc3ab4d4bbd7468c867901d49d.ctex"]
+source_file="res://levels/first level/assets/chimneys/chimney5.png"
+dest_files=["res://.godot/imported/chimney5.png-fc8e5c6556362f39fcc8a63b1a670d02.ctex"]
 
 [params]
 

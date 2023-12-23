@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvmwa4jriw2dx"
-path="res://.godot/imported/most generic.png-58ca216d59b005faa2e9585f462afd26.ctex"
+uid="uid://dep6kiu1eibkl"
+path="res://.godot/imported/window1.png-d69de0860caff63bb5a293dcb5950132.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://levels/first level/assets/most generic.png"
-dest_files=["res://.godot/imported/most generic.png-58ca216d59b005faa2e9585f462afd26.ctex"]
+source_file="res://levels/first level/assets/roofs/window1.png"
+dest_files=["res://.godot/imported/window1.png-d69de0860caff63bb5a293dcb5950132.ctex"]
 
 [params]
 

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bb145wihpfnxm"]
+
+[ext_resource type="PackedScene" uid="uid://dppg37tyrlm5k" path="res://levels/first level/chimney_scenes/chimney_1.tscn" id="1_7wdan"]
+[ext_resource type="Texture2D" uid="uid://dqa61lvwvng2s" path="res://levels/first level/assets/chimneys/chimney2.png" id="2_5hqoy"]
+
+[node name="Chimney2" instance=ExtResource("1_7wdan")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_5hqoy")
