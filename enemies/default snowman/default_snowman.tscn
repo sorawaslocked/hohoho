@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://u4xrbxhxkrly"]
+[gd_scene load_steps=9 format=3 uid="uid://u4xrbxhxkrly"]
 
 [ext_resource type="Script" path="res://enemies/default snowman/default_snowman.gd" id="1_6cqjf"]
 [ext_resource type="Texture2D" uid="uid://bjq0j3qhho4ct" path="res://enemies/default snowman/assets/walk/1.png" id="1_rwph1"]
@@ -29,6 +29,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e475c"]
 size = Vector2(40, 63)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gwchj"]
+size = Vector2(32, 66)
+
 [node name="DefaultSnowman" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 2
@@ -52,3 +55,17 @@ collision_mask = 2
 [node name="PlayerDetection" type="RayCast2D" parent="."]
 position = Vector2(16, 0)
 target_position = Vector2(176, 0)
+
+[node name="HitArea" type="Area2D" parent="."]
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
+position = Vector2(40, 1)
+shape = SubResource("RectangleShape2D_gwchj")
+
+[node name="AttackCooldown" type="Timer" parent="."]
+wait_time = 12.0
+one_shot = true
+
+[connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]
+[connection signal="body_exited" from="HitArea" to="." method="_on_hit_area_body_exited"]

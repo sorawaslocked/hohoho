@@ -14,6 +14,9 @@ position = Vector2(128, 88)
 [node name="DefaultSnowman" parent="." instance=ExtResource("2_e0obo")]
 position = Vector2(464, 0)
 
+[node name="DefaultSnowman2" parent="." instance=ExtResource("2_e0obo")]
+position = Vector2(384, 0)
+
 [node name="Area2D1" type="StaticBody2D" parent="."]
 position = Vector2(800, 48)
 collision_layer = 2

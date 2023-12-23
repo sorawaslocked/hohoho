@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bty0fkcml1mes"]
+[gd_scene load_steps=9 format=3 uid="uid://bty0fkcml1mes"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_6lhci"]
 [ext_resource type="Texture2D" uid="uid://0xj6nih18n73" path="res://player/assets/walk/1.png" id="1_xbgbw"]
@@ -29,6 +29,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h7mdi"]
 size = Vector2(22, 89)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_35gx1"]
+size = Vector2(32, 80)
+
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 2
 script = ExtResource("1_6lhci")
@@ -48,3 +51,18 @@ shape = SubResource("RectangleShape2D_h7mdi")
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
 wait_time = 0.3
 one_shot = true
+
+[node name="HitArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
+position = Vector2(24, 0)
+shape = SubResource("RectangleShape2D_35gx1")
+
+[node name="AttackCooldown" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+
+[connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]
+[connection signal="body_exited" from="HitArea" to="." method="_on_hit_area_body_exited"]
